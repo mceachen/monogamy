@@ -48,9 +48,8 @@ describe "Monogamy" do
 
   it "parallel threads create multiple duplicate rows" do
     run_workers(with_table_lock = false)
-    if Tag.connection.adapter_name == "SQLite"
-      Tag.all.size.must_equal @iterations # <- we're just making sure it runs. SQLite isn't concurrent.
-    else
+    puts "Created #{Tag.all.size} without lock"
+    if Tag.connection.adapter_name != "SQLite"
       Tag.all.size.must_be :>, @iterations # <- any duplicated rows will make me happy.
     end
   end

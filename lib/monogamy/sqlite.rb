@@ -2,11 +2,6 @@ module Monogamy
   module SQLite
     # See http://sqlite.org/lang_transaction.html
     def self.with_table_lock(connection, quoted_table_name, &block)
-      # I can't get sqlite to insert concurrently, so this is a pass-through.
-      yield
-    end
-
-    def self.with_table_lock_if_it_really_needed_it_but_it_doesnt(connection, quoted_table_name, &block)
       if connection.open_transactions > 0
         raise NotImplementedError, "Support for nested transactions within sqlite has not been written"
       end
