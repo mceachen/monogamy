@@ -1,7 +1,6 @@
 # Monogamy [![Build Status](https://api.travis-ci.org/mceachen/monogamy.png?branch=master)](https://travis-ci.org/mceachen/monogamy)
 
-Adds table-level locking to ActiveRecord 3.x. MySQL and PostgreSQL are supported. SQLite is
-irrelevant, as concurrent writing isn't supported.
+Adds table-level locking to ActiveRecord 3.x. MySQL, PostgreSQL, and SQLite are supported.
 
 ## Usage
 

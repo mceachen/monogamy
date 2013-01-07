@@ -24,12 +24,12 @@ describe "Monogamy" do
   end
 
   def run_workers(with_table_lock)
-    start_time = Time.now.to_i + 1
+    start_time = Time.now.to_i + 2
     threads = @workers.times.collect do
       Thread.new do
         begin
           @iterations.times do |ea|
-            find_or_create_at_even_second(start_time + ea, with_table_lock)
+            find_or_create_at_even_second(start_time + (ea * 2), with_table_lock)
           end
         ensure
           ActiveRecord::Base.connection.close
@@ -47,7 +47,9 @@ describe "Monogamy" do
   it "parallel threads create multiple duplicate rows" do
     run_workers(with_table_lock = false)
     puts "Created #{Tag.all.size} without lock"
-    if Tag.connection.adapter_name != "SQLite"
+    if Tag.connection.adapter_name == "SQLite" && RUBY_VERSION == "1.9.3"
+      Tag.all.size.must_equal @iterations # <- sqlite on 1.9.3 doesn't create dupes IKNOWNOTWHY
+    else
       Tag.all.size.must_be :>, @iterations # <- any duplicated rows will make me happy.
     end
   end
