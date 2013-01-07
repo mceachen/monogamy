@@ -19,9 +19,7 @@ describe "Monogamy" do
         Tag.find_or_create_by_name(run_at.to_s)
       end
     else
-      t = Tag.new
-      t.name = run_at.to_s
-      t.save! unless Tag.find_by_name(run_at.to_s)
+      Tag.find_or_create_by_name(run_at.to_s)
     end
   end
 
@@ -43,7 +41,7 @@ describe "Monogamy" do
 
   before :each do
     @iterations = 5
-    @workers = 10
+    @workers = 7
   end
 
   it "parallel threads create multiple duplicate rows" do
