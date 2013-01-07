@@ -1,0 +1,17 @@
+language: ruby
+
+rvm:
+  - 1.8.7
+  - 1.9.3
+
+env:
+  - DB=sqlite
+  - DB=mysql
+  - DB=pg
+
+script: bundle exec rake specs_with_db_ixes
+
+before_script:
+  - mysql -e 'create database monogamy_test'
+  - psql -c 'create database monogamy_test' -U postgres
+
