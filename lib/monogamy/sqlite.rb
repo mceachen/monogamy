@@ -1,7 +1,7 @@
 module Monogamy
   module SQLite
     # See http://sqlite.org/lang_transaction.html
-    def self.with_table_lock(connection, quoted_table_name, &block)
+    def self.with_table_lock(connection, quoted_table_names, &block)
       if connection.open_transactions > 0
         raise NotImplementedError, "Support for nested transactions within sqlite has not been written"
       end

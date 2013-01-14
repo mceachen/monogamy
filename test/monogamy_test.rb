@@ -51,11 +51,13 @@ describe "Monogamy" do
       Tag.all.size.must_equal @iterations # <- sqlite on 1.9.3 doesn't create dupes IKNOWNOTWHY
     else
       Tag.all.size.must_be :>, @iterations # <- any duplicated rows will make me happy.
+      TagAudit.all.size.must_be :>, @iterations # <- any duplicated rows will make me happy.
     end
   end
 
   it "parallel threads with_table_lock don't create multiple duplicate rows" do
     run_workers(with_table_lock = true)
     Tag.all.size.must_equal @iterations # <- any duplicated rows will NOT make me happy.
+    TagAudit.all.size.must_equal @iterations # <- any duplicated rows will NOT make me happy.
   end
 end
