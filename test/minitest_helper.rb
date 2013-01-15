@@ -14,7 +14,7 @@ Tag.new # < make sure class has loaded
 
 require 'minitest/autorun'
 
-DatabaseCleaner.strategy = :deletion
+DatabaseCleaner.strategy = :transaction
 class MiniTest::Spec
   before :each do
     DatabaseCleaner.start
