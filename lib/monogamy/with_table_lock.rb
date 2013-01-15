@@ -34,7 +34,7 @@ module Monogamy
 
       def quoted_table_names_to_lock
         quoted_table_names = [quoted_table_name]
-        quoted_table_names += (additional_tables_to_lock || [])
+        quoted_table_names += (additional_tables_to_lock || []).collect { |ea| ea.to_s }
         additional_model_classes = (self.additional_models_to_lock ||= []).collect do |ea|
           ea.is_a?(String) || ea.is_a?(Symbol) ? ea.to_s.classify.constantize : ea
         end
