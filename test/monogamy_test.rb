@@ -11,9 +11,7 @@ describe "Monogamy" do
   end
 
   def find_or_create_at_even_second(run_at, with_table_lock)
-    Tag.connection.close
     sleep(run_at - Time.now.to_f)
-    Tag.connection.reconnect!
     if with_table_lock
       Tag.with_table_lock do
         Tag.find_or_create_by_name(run_at.to_s)
@@ -27,12 +25,9 @@ describe "Monogamy" do
     start_time = Time.now.to_i + 2
     threads = @workers.times.collect do
       Thread.new do
-        begin
-          @iterations.times do |ea|
-            find_or_create_at_even_second(start_time + (ea * 2), with_table_lock)
-          end
-        ensure
-          ActiveRecord::Base.connection.close
+        Tag.connection.reconnect!
+        @iterations.times do |ea|
+          find_or_create_at_even_second(start_time + (ea * 2), with_table_lock)
         end
       end
     end
@@ -52,6 +47,7 @@ describe "Monogamy" do
     else
       Tag.all.size.must_be :>, @iterations # <- any duplicated rows will make me happy.
       TagAudit.all.size.must_be :>, @iterations # <- any duplicated rows will make me happy.
+      Label.all.size.must_be :>, @iterations # <- any duplicated rows will make me happy.
     end
   end
 
@@ -59,5 +55,6 @@ describe "Monogamy" do
     run_workers(with_table_lock = true)
     Tag.all.size.must_equal @iterations # <- any duplicated rows will NOT make me happy.
     TagAudit.all.size.must_equal @iterations # <- any duplicated rows will NOT make me happy.
+    Label.all.size.must_equal @iterations # <- any duplicated rows will NOT make me happy.
   end
 end
