@@ -8,7 +8,7 @@ module Monogamy
 
       begin
         connection.execute("BEGIN EXCLUSIVE TRANSACTION")
-      rescue Exception => e
+      rescue ActiveRecord::StatementInvalid => e
         if e.message.include? "SQLite3::BusyException" # < Rails wraps BusyException in the message (!!!)
           sleep 0.2
           retry
