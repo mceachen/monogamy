@@ -9,17 +9,14 @@ ActiveRecord::Base.establish_connection(ENV["DB"] || "sqlite")
 ActiveRecord::Migration.verbose = false
 
 require 'test_models'
-
-Tag.new # < make sure class has loaded
-
 require 'minitest/autorun'
 
 DatabaseCleaner.strategy = :deletion
 class MiniTest::Spec
-  before :each do
+  before do
     DatabaseCleaner.start
   end
-  after :each do
+  after do
     DatabaseCleaner.clean
   end
 end
