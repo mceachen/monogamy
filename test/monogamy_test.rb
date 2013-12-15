@@ -16,10 +16,10 @@ describe "Monogamy" do
     Tag.connection.reconnect!
     if with_table_lock
       Tag.with_table_lock do
-        Tag.find_or_create_by(name: run_at.to_s)
+        Tag.where(name: run_at.to_s).first_or_create!
       end
     else
-      Tag.find_or_create_by(name: run_at.to_s)
+      Tag.where(name: run_at.to_s).first_or_create!
     end
   end
 
