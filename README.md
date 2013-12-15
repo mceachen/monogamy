@@ -10,7 +10,7 @@ Adds table-level locking to ActiveRecord 3.2 and 4.0. MySQL and PostgreSQL are s
 
 ```ruby
 Tag.with_table_lock do
-  Tag.find_or_create_by_name("example")
+  Tag.where(name: "example").first_or_create
 end
 ```
 
