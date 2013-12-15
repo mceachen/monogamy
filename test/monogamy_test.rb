@@ -16,15 +16,15 @@ describe "Monogamy" do
     Tag.connection.reconnect!
     if with_table_lock
       Tag.with_table_lock do
-        Tag.find_or_create_by_name(run_at.to_s)
+        Tag.find_or_create_by(name: run_at.to_s)
       end
     else
-      Tag.find_or_create_by_name(run_at.to_s)
+      Tag.find_or_create_by(name: run_at.to_s)
     end
   end
 
   def run_workers(with_table_lock)
-    start_time = Time.now.to_i + 2
+    start_time = Time.now.to_i + 3
     threads = @workers.times.collect do
       Thread.new do
         begin
@@ -40,6 +40,7 @@ describe "Monogamy" do
   end
 
   before :each do
+    Tag.connection.reconnect!
     @iterations = 5
     @workers = 7
   end

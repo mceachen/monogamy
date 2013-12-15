@@ -5,18 +5,15 @@
 
 require 'monogamy/mysql'
 require 'monogamy/postgresql'
-require 'monogamy/sqlite'
 
 module Monogamy
   module WithTableLock
     def with_table_lock(&block)
       adapter = case (connection.adapter_name.downcase)
-        when "postgresql"
+        when 'postgresql', 'empostgresql', 'postgis'
           Monogamy::PostgreSQL
-        when "mysql", "mysql2"
+        when 'mysql', 'mysql2'
           Monogamy::MySQL
-        when "sqlite"
-          Monogamy::SQLite
         else
           raise NotImplementedError, "Support for #{connection.adapter_name} has not been written"
       end
