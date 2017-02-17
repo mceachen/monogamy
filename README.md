@@ -1,10 +1,10 @@
 # Monogamy
 
-Adds table-level locking to ActiveRecord 3.2 and 4.0. MySQL and PostgreSQL are supported.
+Adds table-level locking to ActiveRecord 4.2 and 5.0. MySQL and PostgreSQL are supported.
 
-[![Build Status](https://api.travis-ci.org/mceachen/monogamy.png?branch=master)](https://travis-ci.org/mceachen/monogamy)
-[![Gem Version](https://badge.fury.io/rb/monogamy.png)](http://rubygems.org/gems/monogamy)
-[![Dependency Status](https://gemnasium.com/mceachen/monogamy.png)](https://gemnasium.com/mceachen/monogamy)
+[![Build Status](https://api.travis-ci.org/mceachen/monogamy.svg?branch=master)](https://travis-ci.org/mceachen/monogamy)
+[![Gem Version](https://badge.fury.io/rb/monogamy.svg)](http://rubygems.org/gems/monogamy)
+[![Dependency Status](https://gemnasium.com/mceachen/monogamy.svg)](https://gemnasium.com/mceachen/monogamy)
 
 ## Usage
 

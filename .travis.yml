@@ -1,12 +1,12 @@
 language: ruby
 
 rvm:
-  - 1.9.3
-  - 2.0.0
+  - 2.4.0
+  - 2.3.3
 
 gemfile:
-  - ci/Gemfile.rails-4.0.x
-  - ci/Gemfile.rails-3.2.x
+  - ci/Gemfile.rails-4.2.x
+  - ci/Gemfile.rails-5.0.x
 
 env:
   - DB=mysql
