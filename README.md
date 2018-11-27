@@ -1,4 +1,4 @@
-# Monogamy
+# Monogamy (archived)
 
 Adds table-level locking to ActiveRecord 4.2 and 5.0. MySQL and PostgreSQL are supported.
 
